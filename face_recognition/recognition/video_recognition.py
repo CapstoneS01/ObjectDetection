@@ -6,27 +6,27 @@ import imutils
 import pickle
 
 
-def video_recognition(encodings_path, display, detection_method):
+def video_recognition(encodings_path, detection_method):
 
     names = []
-
-    # load encodings
-    print("Loading encodings...")
+    # load defined encodings
     data = pickle.loads(open(encodings_path, "rb").read())
-
-    # start video stream
-    print("Starting camera stream...")
-    vs = VideoStream(src=0).start()
+    # start webcam stream
+    stream = VideoStream(src=0).start()
     time.sleep(2.0)
 
-    while True:
-        frame = vs.read()
-        rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        rgb = imutils.resize(frame, width=750)
-        r = frame.shape[1] / float(rgb.shape[1])
-        face_boxes = face_recognition.face_locations(rgb,
+    while (1):
+        # read stream and convert to RGB
+        frame = stream.read()
+        frame = cv2.flip(frame, 1)
+        frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+        frame_rgb = imutils.resize(frame, width=750)
+
+        # detect faces in fram and match with encodings
+        video_ratio = frame.shape[1] / float(frame_rgb.shape[1])
+        face_boxes = face_recognition.face_locations(frame_rgb,
                                                      model=detection_method)
-        encodings = face_recognition.face_encodings(rgb, face_boxes)
+        encodings = face_recognition.face_encodings(frame_rgb, face_boxes)
 
         for encoding in encodings:
             matches = face_recognition.compare_faces(data["encodings"],
@@ -37,35 +37,36 @@ def video_recognition(encodings_path, display, detection_method):
                 counts = {}
                 for i in matchedIdxs:
                     name = data["names"][i]
+                    print(name)
                     counts[name] = counts.get(name, 0) + 1
                 name = max(counts, key=counts.get)
             names.append(name)
 
-        # loop over the recognized faces
+        # loop over the recognized faces and create a box around them
         for ((top, right, bottom, left), name) in zip(face_boxes, names):
-            top = int(top * r)
-            bottom = int(bottom * r)
-            left = int(left * r)
-            right = int(right * r)
-            cv2.rectangle(frame, (right, top), (left, bottom),
-                          (0, 153, 0), 2)
-            y = top - 15 if top - 15 > 15 else top + 15
+            top = int(top * video_ratio)
+            bottom = int(bottom * video_ratio)
+            left = int(left * video_ratio)
+            right = int(right * video_ratio)
+            y = top + 20 if top - 20 < 20 else top - 20
             cv2.putText(frame, name, (left, y), cv2.FONT_HERSHEY_SIMPLEX,
                         1, (0, 153, 0), 2)
+            cv2.rectangle(frame, (right, top), (left, bottom),
+                          (0, 153, 0), 2)
 
-        if display > 0:
-            cv2.imshow("Frame", frame)
-            key = cv2.waitKey(1) & 0xFF
-            if key == ord("w"):
-                break
+        cv2.imshow("Frame", frame)
+        key = cv2.waitKey(1) & 0xFF
+        if key == ord("w"):
+            break
 
         # reset names every frame
         names = []
 
+    # on exit, close windows and stop stream
     cv2.destroyAllWindows()
-    vs.stop()
+    stream.stop()
 
 
 if __name__ == "__main__":
-    video_recognition("/Users/faizanrasool/School/ObjectDetection/face_recognition/recognition/encodings.pickle",
-                      1, "hog")
+    video_recognition(
+        "/Users/faizanrasool/School/ObjectDetection/face_recognition/recognition/encodings.pickle", "hog")

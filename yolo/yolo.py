@@ -2,30 +2,29 @@ import torch
 import cv2
 from djitellopy import Tello
 
+
 class TelloYolo:
     def __init__(self):
         self.model = self.load_model()
         self.classes = self.model.names
         self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
-        print("\n\nDevice Used:",self.device)
+        print("\n\nDevice Used:", self.device)
 
     def load_model(self):
-        model = torch.hub.load('yolov5', 'custom', path='yolov5/yolov5s.pt', source='local')
+        model = torch.hub.load(
+            'yolov5', 'custom', path='yolov5/yolov5s.pt', source='local')
         return model
-
 
     def score_frame(self, frame):
         self.model.to(self.device)
         frame = [frame]
         results = self.model(frame)
-     
+
         labels, cord = results.xyxyn[0][:, -1], results.xyxyn[0][:, :-1]
         return labels, cord
 
-
     def class_to_label(self, x):
         return self.classes[int(x)]
-
 
     def plot_boxes(self, results, frame):
         labels, cord = results
@@ -34,13 +33,14 @@ class TelloYolo:
         for i in range(n):
             row = cord[i]
             if row[4] >= 0.2:
-                x1, y1, x2, y2 = int(row[0]*x_shape), int(row[1]*y_shape), int(row[2]*x_shape), int(row[3]*y_shape)
+                x1, y1, x2, y2 = int(
+                    row[0]*x_shape), int(row[1]*y_shape), int(row[2]*x_shape), int(row[3]*y_shape)
                 bgr = (0, 255, 0)
                 cv2.rectangle(frame, (x1, y1), (x2, y2), bgr, 2)
-                cv2.putText(frame, self.class_to_label(labels[i]), (x1, y1), cv2.FONT_HERSHEY_SIMPLEX, 0.9, bgr, 2)
+                cv2.putText(frame, self.class_to_label(
+                    labels[i]), (x1, y1), cv2.FONT_HERSHEY_SIMPLEX, 0.9, bgr, 2)
 
         return frame
-
 
     def __call__(self):
         tello = Tello()
@@ -64,6 +64,7 @@ class TelloYolo:
 
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
+
 
 detection = TelloYolo()
 detection()
