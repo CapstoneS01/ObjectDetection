@@ -37,7 +37,6 @@ def video_recognition(encodings_path, detection_method):
                 counts = {}
                 for i in matchedIdxs:
                     name = data["names"][i]
-                    print(name)
                     counts[name] = counts.get(name, 0) + 1
                 name = max(counts, key=counts.get)
             names.append(name)
