@@ -7,7 +7,6 @@ import pickle
 
 
 def video_recognition(encodings_path, detection_method):
-
     names = []
     # load defined encodings
     data = pickle.loads(open(encodings_path, "rb").read())
@@ -22,7 +21,7 @@ def video_recognition(encodings_path, detection_method):
         frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         frame_rgb = imutils.resize(frame, width=750)
 
-        # detect faces in fram and match with encodings
+        # detect faces in frame and match with encodings
         video_ratio = frame.shape[1] / float(frame_rgb.shape[1])
         face_boxes = face_recognition.face_locations(frame_rgb,
                                                      model=detection_method)
@@ -68,4 +67,4 @@ def video_recognition(encodings_path, detection_method):
 
 if __name__ == "__main__":
     video_recognition(
-        "/Users/faizanrasool/School/ObjectDetection/face_recognition/recognition/encodings.pickle", "hog")
+        "/Users/faizanrasool/Desktop/ObjectDetection/face_recognition/encodings.pickle", "hog")

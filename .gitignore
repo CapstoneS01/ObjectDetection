@@ -2,3 +2,6 @@
 *.jpeg
 lib
 bin
+
+*.MOV
+*.mp4
