@@ -77,4 +77,4 @@ def video_file_recognition(encodings_path, input_path, output, method):
 
 if __name__ == "__main__":
     video_file_recognition("/Users/faizanrasool/Desktop/ObjectDetection/face_recognition/encodings.pickle",
-                           "/Users/faizanrasool/Desktop/ObjectDetection/face_recognition/test/test_video.MOV", "output.mp4", "hog")
+                           "/Users/faizanrasool/Desktop/ObjectDetection/face_recognition/test/test_video.MOV", "output.mp4", "cnn")

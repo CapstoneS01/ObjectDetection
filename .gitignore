@@ -1,7 +1,9 @@
 *.jpg
 *.jpeg
-lib
-bin
 
 *.MOV
 *.mp4
+
+yolov5
+*.jpg
+*.MOV
