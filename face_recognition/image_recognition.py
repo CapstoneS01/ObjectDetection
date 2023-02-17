@@ -37,14 +37,14 @@ def image_recognition(encodings_path, image_path, detection_method):
     # label all recognized faces
     for ((top, right, bottom, left), name) in zip(face_boxes, names):
         y = top + 20 if top + 20 < 20 else top - 20
-        cv2.rectangle(image, (right, top), (left, bottom), (0, 153, 0), 3)
+        cv2.rectangle(image, (right, top), (left, bottom), (255, 0, 0), 3)
         cv2.putText(image, name, (left, y), cv2.FONT_HERSHEY_SIMPLEX,
-                    1, (0, 153, 0), 2)
+                    2, (255, 0, 0), 3)
 
     cv2.imshow("img", image)
     cv2.waitKey(0)
 
 
 if __name__ == "__main__":
-    image_recognition("/Users/faizanrasool/School/ObjectDetection/face_recognition/recognition/encodings.pickle",
+    image_recognition("/Users/faizanrasool/Desktop/ObjectDetection/face_recognition/encodings.pickle",
                       "./test/test_image.jpg", "cnn")

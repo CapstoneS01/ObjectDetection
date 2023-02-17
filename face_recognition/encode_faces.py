@@ -38,5 +38,5 @@ def encode_faces(dataset_path, encoding_path, detection_method):
 
 
 if __name__ == "__main__":
-    encode_faces("/Users/faizanrasool/School/ObjectDetection/face_recognition/recognition/dataset",
-                 "/Users/faizanrasool/School/ObjectDetection/face_recognition/recognition/encodings.pickle", "cnn")
+    encode_faces("/Users/faizanrasool/Desktop/ObjectDetection/face_recognition/dataset",
+                 "/Users/faizanrasool/Desktop/ObjectDetection/face_recognition/encodings.pickle", "cnn")
