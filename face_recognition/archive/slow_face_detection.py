@@ -1,4 +1,4 @@
-import imutils.video
+from imutils.video import VideoStream
 import face_recognition
 import imutils
 import pickle
@@ -14,20 +14,23 @@ def video_file_recognition(encodings_path, input_path, output, method):
 
     writer = None
     time.sleep(2.0)
-
     frame_count = 0
+
     total_frames = int(vs.get(cv2.CAP_PROP_FRAME_COUNT))
+    print(total_frames)
 
     while frame_count < total_frames:
-        success, frame = vs.read()
+        frame = vs.read()
         frame = cv2.rotate(frame, cv2.ROTATE_180)
-        if not success:
+
+        if frame is None:
             break
 
         rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         rgb = imutils.resize(frame, width=750)
         video_ratio = frame.shape[1] / float(rgb.shape[1])
-        face_boxes = face_recognition.face_locations(rgb, model=method)
+        face_boxes = face_recognition.face_locations(rgb,
+                                                     model=method)
         encodings = face_recognition.face_encodings(rgb, face_boxes)
         names = []
 
@@ -53,9 +56,9 @@ def video_file_recognition(encodings_path, input_path, output, method):
             right = int(right * video_ratio)
             y = top + 20 if top - 20 < 20 else top - 20
             cv2.putText(frame, name, (left, y), cv2.FONT_HERSHEY_SIMPLEX,
-                        3, (255, 0, 0), 3)
+                        1, (0, 153, 0), 2)
             cv2.rectangle(frame, (right, top), (left, bottom),
-                          (255, 0, 0), 3)
+                          (0, 153, 0), 2)
 
         if writer is None and output is not None:
             fourcc = cv2.VideoWriter_fourcc(*'avc1')
@@ -68,12 +71,7 @@ def video_file_recognition(encodings_path, input_path, output, method):
         frame_count += 1
 
     cv2.destroyAllWindows()
-    vs.release()
+    vs.stop()
 
     if writer is not None:
         writer.release()
-
-
-if __name__ == "__main__":
-    video_file_recognition("/Users/faizanrasool/Desktop/ObjectDetection/face_recognition/encodings.pickle",
-                           "/Users/faizanrasool/Desktop/ObjectDetection/face_recognition/test/test_video.MOV", "output.mp4", "hog")

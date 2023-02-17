@@ -48,9 +48,9 @@ def video_recognition(encodings_path, detection_method):
             right = int(right * video_ratio)
             y = top + 20 if top - 20 < 20 else top - 20
             cv2.putText(frame, name, (left, y), cv2.FONT_HERSHEY_SIMPLEX,
-                        1, (0, 153, 0), 2)
+                        2, (255, 0, 0), 3)
             cv2.rectangle(frame, (right, top), (left, bottom),
-                          (0, 153, 0), 2)
+                          (255, 0, 0), 2)
 
         cv2.imshow("Frame", frame)
         key = cv2.waitKey(1) & 0xFF
