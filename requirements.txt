@@ -1,0 +1,4 @@
+djitellopy==2.4.0
+imutils==0.5.4
+opencv_python==4.7.0.68
+torch==1.13.1

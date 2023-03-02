@@ -20,7 +20,7 @@ def video_file_recognition(encodings_path, input_path, output, method):
 
     while frame_count < total_frames:
         success, frame = vs.read()
-        frame = cv2.rotate(frame, cv2.ROTATE_180)
+        # frame = cv2.rotate(frame, cv2.ROTATE_180)
         if not success:
             break
 
@@ -59,7 +59,7 @@ def video_file_recognition(encodings_path, input_path, output, method):
 
         if writer is None and output is not None:
             fourcc = cv2.VideoWriter_fourcc(*'avc1')
-            writer = cv2.VideoWriter("/Users/faizanrasool/Desktop/ObjectDetection/face_recognition/test/output.mp4", fourcc, 60,
+            writer = cv2.VideoWriter("/Users/faizanrasool/Desktop/school/ObjectDetection/face_recognition/test/" + output, fourcc, 60,
                                      (frame.shape[1], frame.shape[0]), True)
 
         if writer is not None:
@@ -75,5 +75,5 @@ def video_file_recognition(encodings_path, input_path, output, method):
 
 
 if __name__ == "__main__":
-    video_file_recognition("/Users/faizanrasool/Desktop/ObjectDetection/face_recognition/encodings.pickle",
-                           "/Users/faizanrasool/Desktop/ObjectDetection/face_recognition/test/test_video.MOV", "output.mp4", "hog")
+    video_file_recognition("/Users/faizanrasool/Desktop/school/ObjectDetection/face_recognition/encodings.pickle",
+                           "/Users/faizanrasool/Desktop/school/ObjectDetection/face_recognition/test/test_video.MOV", "test_output.mp4", "hog")

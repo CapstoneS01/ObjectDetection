@@ -1,22 +1,26 @@
-from imutils.video import VideoStream
+import imutils.video
+import pickle
 import cv2
 import face_recognition
+from djitellopy import Tello
+import face_recognition
 import time
-import imutils
-import pickle
 
 
-def video_recognition(encodings_path, detection_method):
+def skyhunt(encodings_path, detection_method):
+    tello = Tello()
+    tello.connect()
+    tello.streamoff()
+    tello.streamon()
+
     names = []
-    # load defined encodings
     data = pickle.loads(open(encodings_path, "rb").read())
-    # start webcam stream
-    stream = VideoStream(src=0).start()
     time.sleep(2.0)
 
     while (1):
         # read stream and convert to RGB
-        frame = stream.read()
+        frame_read = tello.get_frame_read()
+        frame = frame_read.frame
         frame = cv2.flip(frame, 1)
         frame_rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         frame_rgb = imutils.resize(frame, width=750)
@@ -62,9 +66,7 @@ def video_recognition(encodings_path, detection_method):
 
     # on exit, close windows and stop stream
     cv2.destroyAllWindows()
-    stream.stop()
 
 
 if __name__ == "__main__":
-    video_recognition(
-        "/Users/faizanrasool/Desktop/school/ObjectDetection/face_recognition/encodings.pickle", "hog")
+    skyhunt("/Users/faizanrasool/Desktop/school/ObjectDetection/combined/encodings.pickle", "cnn")

@@ -46,5 +46,5 @@ def image_recognition(encodings_path, image_path, detection_method):
 
 
 if __name__ == "__main__":
-    image_recognition("/Users/faizanrasool/Desktop/ObjectDetection/face_recognition/encodings.pickle",
+    image_recognition("/Users/faizanrasool/Desktop/school/ObjectDetection/face_recognition/encodings.pickle",
                       "./test/test_image.jpg", "cnn")
