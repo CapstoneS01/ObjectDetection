@@ -50,9 +50,6 @@ class TelloYolo:
         tello.streamon()
 
         while True:
-            # capture = cv2.VideoCapture(0)
-            # grabbed, frame = capture.read()
-
             frame_read = tello.get_frame_read()
             frame = frame_read.frame
 
