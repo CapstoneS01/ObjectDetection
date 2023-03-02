@@ -2,3 +2,4 @@ djitellopy==2.4.0
 imutils==0.5.4
 opencv_python==4.7.0.72
 torch==1.13.1
+face_recognition
