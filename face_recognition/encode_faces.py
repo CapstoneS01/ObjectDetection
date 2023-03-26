@@ -40,7 +40,7 @@ def encode_faces(dataset_path, encoding_path, detection_method):
 
 
 if __name__ == "__main__":
-    # print("Beginning encoding...")
+    print("Beginning encoding...")
     encode_faces("../../Web/server/dataset",
                  "../../ObjectDetection/face_recognition/encodings.pickle", "cnn")
     print("Encoding complete")
