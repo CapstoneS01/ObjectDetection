@@ -18,7 +18,8 @@ def image_recognition(encodings_path, image_path, detection_method):
 
     # match face in image to one in encodings
     for encoding in encodings:
-        face_matches = face_recognition.compare_faces(data["encodings"], encoding)
+        face_matches = face_recognition.compare_faces(
+            data["encodings"], encoding)
         name = "not found"
         # check dataset and get matches to input image
         if True in face_matches:
@@ -34,11 +35,12 @@ def image_recognition(encodings_path, image_path, detection_method):
     for ((top, right, bottom, left), name) in zip(face_boxes, names):
         y = top + 20 if top + 20 < 20 else top - 20
         cv2.rectangle(image, (right, top), (left, bottom), (0, 153, 0), 3)
-        cv2.putText(image, name, (left, y), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 153, 0), 2)
+        cv2.putText(image, name, (left, y),
+                    cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 153, 0), 2)
 
     cv2.imshow("img", image)
     cv2.waitKey(0)
 
 
 if __name__ == "__main__":
-    image_recognition("./encodings.pickle", "./test/test_image.jpg", "cnn")
+    image_recognition("./encodings.pickle", "./test/test_image.jpeg", "cnn")
