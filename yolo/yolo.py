@@ -43,17 +43,20 @@ class TelloYolo:
         return frame
 
     def __call__(self):
-        tello = Tello()
-        tello.connect()
+        # tello = Tello()
+        # tello.connect()
 
-        tello.streamoff()
-        tello.streamon()
+        # tello.streamoff()
+        # tello.streamon()
 
         while True:
-            frame_read = tello.get_frame_read()
-            frame = frame_read.frame
+            capture = cv2.VideoCapture(0)
+            grabbed, frame = capture.read()
 
-            if not frame_read.grabbed:
+            # frame_read = tello.get_frame_read()
+            # frame = frame_read.frame
+
+            if not grabbed:
                 break
             results = self.score_frame(frame)
             frame = self.plot_boxes(results, frame)
