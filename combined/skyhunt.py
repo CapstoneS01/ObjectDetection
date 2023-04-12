@@ -49,7 +49,7 @@ class TelloYolo:
 
 
 def skyhunt(encodings_path, detection_method):
-    #object detection
+    # object detection
     detection = TelloYolo()
 
     tello = Tello()
@@ -100,7 +100,7 @@ def skyhunt(encodings_path, detection_method):
                         2, (255, 0, 0), 3)
             cv2.rectangle(frame, (right, top), (left, bottom),
                           (255, 0, 0), 2)
-        
+
         # object detection
         results = detection.score_frame(frame)
         frame = detection.plot_boxes(results, frame)
@@ -118,4 +118,4 @@ def skyhunt(encodings_path, detection_method):
 
 
 if __name__ == "__main__":
-    skyhunt("/Users/faizanrasool/Desktop/school/ObjectDetection/combined/encodings.pickle", "hog")
+    skyhunt("combined/encodings.pickle", "hog")
