@@ -43,4 +43,5 @@ def image_recognition(encodings_path, image_path, detection_method):
 
 
 if __name__ == "__main__":
-    image_recognition("./encodings.pickle", "./test/test_image.jpeg", "cnn")
+    image_recognition("face_recognition/encodings.pickle",
+                      "face_recognition/test/img.jpeg", "hog")

@@ -67,4 +67,4 @@ def video_recognition(encodings_path, detection_method):
 
 if __name__ == "__main__":
     video_recognition(
-        "/Users/faizanrasool/Desktop/school/ObjectDetection/face_recognition/encodings.pickle", "hog")
+        "face_recognition/encodings.pickle", "hog")
